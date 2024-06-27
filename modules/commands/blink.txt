@@ -1,0 +1,55 @@
+module.exports.config = {
+  name: "blink",
+  version: "1.0.0",
+  hasPermssion: 0,
+  credits: "D-Jukie",
+  description: "Tạo 1 gif avt các thành viên được tag",
+  commandCategory: "Tạo ảnh",
+  usages: "[delay mentions/all delay]",
+  cooldowns: 5
+};
+module.exports.run = async ({ event, api, args }) => {
+  const fs = require('fs-extra');
+  const axios = require('axios');
+  var mention = Object.keys(event.mentions)
+  var delay = args[0]
+  var daylayAll = args[1]
+  var blink = [], listID = []
+  if(args[0] == 'all') {
+    var participant = event.participantIDs.length
+    for (var i = 0; i < participant; i++) {
+    var id = event.participantIDs[i]
+      listID += id + ','
+    }
+    let getAPI = (await axios.get(encodeURI(`https://APITPK-PHU.last-namename.repl.co/blink?apikey=Tpk05&id=${listID + ','}&delay=${parseInt(daylayAll) || 500}`), 
+      { responseType: "arraybuffer" } )).data; 
+      fs.writeFileSync(__dirname + "/cache/blink.gif", Buffer.from(getAPI, "utf-8") );
+      blink.push(fs.createReadStream(__dirname + "/cache/blink.gif"));  
+    const msg = {
+    body: `🆕====『 𝗕𝗟𝗜𝗡𝗞 𝗠𝗘𝗠𝗕𝗘𝗥 』===🆕
+━━━━━━━━━━━━━━━━━━━━
+👉 𝗕𝗮̣𝗻 𝘃𝘂̛̀𝗮 𝘁𝗮̣𝗼 𝘁𝗵𝗮̀𝗻𝗵 𝗰𝗼̂𝗻𝗴 𝗯𝗹𝗶𝗻𝗸/𝗻𝗵𝗮́𝘆 𝗺𝗮̆́𝘁 𝘃𝗼̛́𝗶 𝗮𝗹𝗹 𝘁𝗵𝗮̀𝗻𝗵 𝘃𝗶𝗲̂𝗻`,
+    attachment: blink
+};
+    return api.sendMessage(msg, event.threadID, event.messageID) 
+  }
+  else {
+    if(!mention) return api.sendMessage('→ Vui lòng tag các thành viên muốn tạo gif cùng', event.threadID, event.messageID);
+    var mentions = mention.length
+    for (var i = 0; i < mentions; i++) {
+      var id = mention[i]
+        listID += id + ','
+    }
+    let getAPI = (await axios.get(encodeURI(`https://APITPK-PHU.last-namename.repl.co/blink?apikey=Tpk05&id=${listID + ',' + event.senderID}&delay=${parseInt(delay) || 500}`), 
+      { responseType: "arraybuffer" } )).data; 
+      fs.writeFileSync(__dirname + "/cache/blink.gif", Buffer.from(getAPI, "utf-8") );
+      blink.push(fs.createReadStream(__dirname + "/cache/blink.gif"));  
+const msg = {
+    body: `🆕====『 𝗕𝗟𝗜𝗡𝗞 𝗠𝗘𝗠𝗕𝗘𝗥 』===🆕
+━━━━━━━━━━━━━━━━━━━━
+👉 𝗕𝗮̣𝗻 𝘃𝘂̛̀𝗮 𝘁𝗮̣𝗼 𝘁𝗵𝗮̀𝗻𝗵 𝗰𝗼̂𝗻𝗴 𝗯𝗹𝗶𝗻𝗸/𝗻𝗵𝗮́𝘆 𝗺𝗮̆́𝘁 𝘃𝗼̛́𝗶 𝗻𝗴𝘂̛𝗼̛̀𝗶 𝗯𝗮̣𝗻 𝗰𝗵𝗼̣𝗻`,
+    attachment: blink 
+};
+    return api.sendMessage(msg, event.threadID, event.messageID)
+  }
+}

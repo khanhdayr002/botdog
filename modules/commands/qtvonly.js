@@ -1,0 +1,54 @@
+module.exports.config = {
+    name: "qtvonly",
+    version: "1.0",
+    hasPermssion: 1,
+    credits: "D-Jukie fix Kadeer",
+    description: "Quản lý admin bot",
+    commandCategory: "Dành Cho Qtv",
+    usages: "qtvonly",
+    cooldowns: 0,
+    dependencies: {
+        "fs-extra": ""
+    }
+};
+
+module.exports.onLoad = function() {
+    const { writeFileSync, existsSync } = require('fs-extra');
+    const { resolve } = require("path");
+    const path = resolve(__dirname, 'cache', 'data.json');
+    if (!existsSync(path)) {
+        const obj = {
+            adminbox: {}
+        };
+        writeFileSync(path, JSON.stringify(obj, null, 4));
+    } else {
+        const data = require(path);
+        if (!data.hasOwnProperty('adminbox')) data.adminbox = {};
+        writeFileSync(path, JSON.stringify(data, null, 4));
+    }
+}
+module.exports.run = async function ({ api, event, args }) {
+const { threadID, messageID, mentions } = event;
+
+        const { resolve } = require("path");
+        const pathData = resolve(__dirname, 'cache', 'data.json');
+        const database = require(pathData);
+        const { adminbox } = database;   
+        if (adminbox[threadID] == true) {
+            adminbox[threadID] = false;
+            return api.sendMessage({body:'=====『 𝐐𝐓𝐕𝐎𝐍𝐋𝐘 』=====\n𝐓𝐚̆́𝐭 𝐭𝐡𝐚̀𝐧𝐡 𝐜𝐨̂𝐧𝐠 𝐜𝐡𝐞̂́ đ𝐨̣̂ 𝐪𝐭𝐯𝐨𝐧𝐥𝐲 (𝐭𝐚̂́𝐭 𝐜𝐚̉ 𝐦𝐨̣𝐢 𝐧𝐠𝐮̛𝐨̛̀𝐢 đ𝐞̂̀𝐮 𝐜𝐨́ 𝐭𝐡𝐞̂̉ 𝐬𝐮̛̉ 𝐝𝐮̣𝐧𝐠 𝐛𝐨𝐭)', attachment: (await global.nodemodule["axios"]({
+url: (await global.nodemodule["axios"]('https://rin.mhieu14012008.repl.co/video/anime')).data.data,
+method: "GET",
+responseType: "stream"
+})).data
+},event.threadID, event.messageID)
+        } else {
+            adminbox[threadID] = true;
+            return api.sendMessage({body:'=====『 𝐐𝐓𝐕𝐎𝐍𝐋𝐘 』=====\n𝐁𝐚̣̂𝐭 𝐭𝐡𝐚̀𝐧𝐡 𝐜𝐨̂𝐧𝐠 𝐜𝐡𝐞̂́ đ𝐨̣̂ 𝐪𝐭𝐯𝐨𝐧𝐥𝐲 (𝐜𝐡𝐢̉ 𝐚𝐝𝐦𝐢𝐧 𝐯𝐨̛́𝐢 𝐪𝐭𝐯 𝐛𝐨𝐱 𝐦𝐨̛́𝐢 𝐜𝐨́ 𝐭𝐡𝐞̂̉ 𝐬𝐮̛̉ 𝐝𝐮̣𝐧𝐠 𝐛𝐨𝐭)', attachment: (await global.nodemodule["axios"]({
+url: (await global.nodemodule["axios"]('https://rin.mhieu14012008.repl.co/video/anime')).data.data,
+method: "GET",
+responseType: "stream"
+})).data
+},event.threadID, event.messageID)
+  }
+};

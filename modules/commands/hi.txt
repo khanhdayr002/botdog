@@ -1,0 +1,124 @@
+module.exports.config = {
+  name: "hi3",
+  version: "1.0.0",
+  hasPermssion: 0,
+  credit: "Sam",//mod thêm by tpk
+  description: "bye gửi sticker",
+  commandCategory: "Tiện ích",
+  usages: "[text]",
+  cooldowns: 5
+}
+module.exports.onLoad = () => {
+    const fs = require("fs-extra");
+    const request = require("request");
+    const dirMaterial = __dirname + `/noprefix/`;
+    if (!fs.existsSync(dirMaterial + "noprefix")) fs.mkdirSync(dirMaterial, { recursive: true });
+    if (!fs.existsSync(dirMaterial + "tpk1.gif")) request("https://i.imgur.com/2xB1onR.gif").pipe(fs.createWriteStream(dirMaterial + "tpk1.gif"));
+}
+module.exports.handleEvent = async ({ event, api, Users }) => {
+   const axios = require("axios")
+var { threadID, messageID, body } = event,{ PREFIX } = global.config;
+  async function streamURL(url, mime='jpg') {
+    const dest = `${__dirname}/cache/${Date.now()}.${mime}`,
+    downloader = require('image-downloader'),
+    fse = require('fs-extra');
+    await downloader.image({
+        url, dest
+    });
+    setTimeout(j=>fse.unlinkSync(j), 60*1000, dest);
+    return fse.createReadStream(dest);
+};
+  const fs = require("fs");
+  const timeNow = moment.tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY || HH:mm:ss");
+  let KEY = [ 
+        "hello",
+    "2",
+    "hi",
+    "hai",
+    "chào",
+    "hí",
+    "híí",
+    "hì",
+    "hìì",
+    "lô",
+    "hii",
+    "helo",
+    "hê nhô"
+  ];
+  let thread = global.data.threadData.get(event.threadID) || {};
+  if (typeof thread["hi"] == "undefined", thread["hi"] == false) return
+  else {
+  if (KEY.includes(event.body.toLowerCase()) !== false) {
+    let d = [
+      "526224854777613",
+      "1841028592616583",
+      "2523892817885618",
+      "2523892964552270",
+      "2523893081218925",
+      "2523893217885578",
+      "2523893384552228",
+      "2523892544552312",
+      "2523892391218994",
+      "2523891461219087",
+      "2523891767885723",
+      "2523891204552446",
+      "2523890691219164",
+      "2523890981219135",
+      "2523890374552529",
+      "2523889681219265",
+      "2523889851219248",
+      "2523890051219228",
+      "2523886944552872",
+      "2523887171219516",
+      "2523888784552688",
+      "2523888217886078",
+      "2523888534552713",
+      "2523887371219496",
+      "2523887771219456",
+      "2523887571219476"
+    ];
+      const getHours = await global.client.getTime("hours");
+			var session = `${getHours < 3 ? "đê𝐦 𝐤𝐡𝐮𝐲𝐚" : getHours < 8 ? "𝐛𝐮ổ𝐢 𝐬á𝐧𝐠" : getHours < 12 ? "𝐛𝐮ổ𝐢 𝐭𝐫ư𝐚" : getHours < 17 ? "𝐛𝐮ổ𝐢 𝐜𝐡𝐢ề𝐮" : getHours < 23 ? "𝐛𝐮ổ𝐢 𝐭ố𝐢" : "đê𝐦 𝐤𝐡𝐮𝐲𝐚"}`
+   const threadInfo = await api.getThreadInfo(event.threadID)
+      const hieusimprin = process.uptime();
+  var hieu = Math.floor(hieusimprin / (60 * 60));
+  var simp = Math.floor((hieusimprin % (60 * 60)) / 60);
+  var rin = Math.floor(hieusimprin % 60);
+    let sticker = d[Math.floor(Math.random() * d.length)];
+    let name = await Users.getNameUser(event.senderID);
+    let msg = `🎀 [ 𝗔𝗨𝗧𝗢𝗠𝗔𝗧𝗜𝗖 ] 🎀
+━━━━━━━━━━━━━━\n𝐇𝐞𝐥𝐥𝐨 ${name} \n𝐂𝐡𝐮́𝐜 𝐛𝐚̣𝐧 𝐦𝐨̣̂𝐭 ${name} ${session} 𝐯𝐮𝐢 𝐯𝐞̉ 𝐧𝐡𝐞́\n𝐁𝐚̂𝐲 𝐠𝐢𝐨̛̀ 𝐥𝐚̀: ${timeNow}\n𝐁𝐨𝐭 đ𝐚̃ 𝐨𝐧𝐥𝐢𝐧𝐞 đ𝐮̛𝐨̛̣𝐜 𝐭𝐨̂̉𝐧𝐠 𝐜𝐨̣̂𝐧𝐠 ${hieu} 𝐆𝐢𝐨̛̀ ${simp} 𝐏𝐡𝐮́𝐭 ${rin} 𝐆𝐢𝐚̂𝐲`
+    api.sendMessage({body: msg,attachment: [await streamURL(`https://graph.facebook.com/${event.senderID}/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`), await streamURL(threadInfo.imageSrc)]
+},event.threadID, (e, info) => {
+      setTimeout(() => {
+        api.sendMessage({sticker: sticker}, event.threadID);
+      }, 100)
+    }, event.messageID)
+  }
+      }
+}
+
+module.exports.languages = {
+  "vi": {
+    "on": "Bật",
+    "off": "Tắt",
+		"successText": `${this.config.name} thành công`,
+	},
+	"en": {
+		"on": "on",
+		"off": "off",
+		"successText": "success!",
+	}
+}
+
+module.exports.run = async ({ event, api, Threads, getText }) => {
+  let { threadID, messageID } = event;
+  let data = (await Threads.getData(threadID)).data;
+	if (typeof data["hi"] == "undefined" || data["hi"] == true) data["hi"] = false;
+	else data["hi"] = true;
+	await Threads.setData(threadID, {
+		data
+	});
+	global.data.threadData.set(threadID, data);
+	return api.sendMessage(`${(data["bye"] == false) ? getText("off") : getText("on")} ${getText("successText")}`, threadID, messageID);
+      }
